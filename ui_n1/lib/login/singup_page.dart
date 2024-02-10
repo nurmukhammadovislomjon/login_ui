@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ui_n1/color.dart';
+import 'package:ui_n1/login/save/saveUserSingUp.dart';
+import 'package:ui_n1/main.dart';
 
 class SingupPage extends StatefulWidget {
   const SingupPage({super.key});
@@ -14,6 +16,11 @@ class SingupPage extends StatefulWidget {
 class _SingupPageState extends State<SingupPage> {
   var isPasswordVisible = true;
   IconData eyeIcon = FontAwesomeIcons.eye;
+
+  TextEditingController name = TextEditingController();
+  TextEditingController familya = TextEditingController();
+  TextEditingController number = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +125,8 @@ class _SingupPageState extends State<SingupPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: TextField(
-                              keyboardType: TextInputType.number,
+                              controller: name,
+                              keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -165,7 +173,7 @@ class _SingupPageState extends State<SingupPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: TextField(
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.name,
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -201,6 +209,7 @@ class _SingupPageState extends State<SingupPage> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                               ),
+                              controller: familya,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(20),
                               ],
@@ -212,6 +221,7 @@ class _SingupPageState extends State<SingupPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: TextField(
+                              controller: number,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
@@ -310,6 +320,7 @@ class _SingupPageState extends State<SingupPage> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+                              controller: password,
                               obscureText: isPasswordVisible,
                               style: GoogleFonts.poppins(
                                 color: backgroundColorGreen,
@@ -327,6 +338,7 @@ class _SingupPageState extends State<SingupPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Container(
+                              margin: const EdgeInsets.only(bottom: 15),
                               width: double.maxFinite,
                               height: 60,
                               decoration: BoxDecoration(
@@ -336,13 +348,172 @@ class _SingupPageState extends State<SingupPage> {
                                   width: 2,
                                 ),
                               ),
-                              child: Center(
-                                child: Text(
-                                  "Ro'yxatdan o'tish",
-                                  style: GoogleFonts.poppins(
-                                    color: backgroundColorGreen,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
+                              child: InkWell(
+                                onTap: () {
+                                  if (name.text.isNotEmpty &&
+                                      familya.text.isNotEmpty &&
+                                      number.text.length == 12 &&
+                                      password.text.length >= 8) {
+                                    saveUser();
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MyApp()),
+                                        (route) => false);
+                                  } else if (name.text.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Container(
+                                          width: double.maxFinite,
+                                          height: 90,
+                                          margin: EdgeInsets.only(
+                                              right: 10, left: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                            color: redColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Avval ismni\nkiriting",
+                                                style: GoogleFonts.poppins(
+                                                    color: whiteColor,
+                                                    fontSize: 18),
+                                              ),
+                                              Icon(
+                                                Icons.error,
+                                                color: whiteColor,
+                                                size: 40,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        backgroundColor: whiteColor,
+                                      ),
+                                    );
+                                  } else if (familya.text.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Container(
+                                          width: double.maxFinite,
+                                          height: 90,
+                                          margin: EdgeInsets.only(
+                                              right: 10, left: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                            color: redColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Avval familyani\nkiriting",
+                                                style: GoogleFonts.poppins(
+                                                    color: whiteColor,
+                                                    fontSize: 18),
+                                              ),
+                                              Icon(
+                                                Icons.error,
+                                                color: whiteColor,
+                                                size: 40,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        backgroundColor: whiteColor,
+                                      ),
+                                    );
+                                  } else if (number.text.length != 12) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Container(
+                                          width: double.maxFinite,
+                                          height: 90,
+                                          margin: EdgeInsets.only(
+                                              right: 10, left: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                            color: redColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Avval telefon raqamni\nkiriting",
+                                                style: GoogleFonts.poppins(
+                                                    color: whiteColor,
+                                                    fontSize: 18),
+                                              ),
+                                              Icon(
+                                                Icons.error,
+                                                color: whiteColor,
+                                                size: 40,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        backgroundColor: whiteColor,
+                                      ),
+                                    );
+                                  } else if (password.text.length < 8) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Container(
+                                          width: double.maxFinite,
+                                          height: 90,
+                                          margin: EdgeInsets.only(
+                                              right: 10, left: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                            color: redColor,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Avval parol\n yarating",
+                                                style: GoogleFonts.poppins(
+                                                    color: whiteColor,
+                                                    fontSize: 18),
+                                              ),
+                                              Icon(
+                                                Icons.error,
+                                                color: whiteColor,
+                                                size: 40,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        backgroundColor: whiteColor,
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Center(
+                                  child: Text(
+                                    "Ro'yxatdan o'tish",
+                                    style: GoogleFonts.poppins(
+                                      color: backgroundColorGreen,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -359,6 +530,14 @@ class _SingupPageState extends State<SingupPage> {
         ),
       ),
     );
+  }
+
+  Future saveUser() async {
+    await SaveSignUp.saveName(name.text);
+    await SaveSignUp.saveFamilya(familya.text);
+    await SaveSignUp.saveNumber(number.text);
+    await SaveSignUp.savePassword(password.text);
+    print("Saqlandi");
   }
 }
 

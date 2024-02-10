@@ -6,3 +6,4 @@ Color childGreenColor = Color.fromARGB(255, 135, 221, 221);
 Color whiteColor = Colors.white;
 
 Color blackColor = Colors.black;
+Color redColor = Colors.red;

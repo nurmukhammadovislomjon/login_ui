@@ -240,11 +240,12 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 20,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Container(
+                              margin: EdgeInsets.only(bottom: 15),
                               width: double.maxFinite,
                               height: 60,
                               decoration: BoxDecoration(

@@ -80,11 +80,12 @@ class _LoginSetapPageState extends State<LoginSetapPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
-                      height: 110,
+                      height: 80,
                     ),
                     Container(
                       width: 130,
                       height: 130,
+                      margin: EdgeInsets.only(bottom: 30),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         border:
@@ -93,7 +94,9 @@ class _LoginSetapPageState extends State<LoginSetapPage> {
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
-                              context, MaterialPageRoute(builder: (context)=>LoginOrSingup()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginOrSingup()));
                         },
                         child: Center(
                           child: Text(
